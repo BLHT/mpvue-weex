@@ -1,7 +1,9 @@
-const path = require('path')
 const fs = require('fs')
+const os = require('os');
+const path = require('path')
 const MpvuePlugin = require('webpack-mpvue-asset-plugin')
 const MpvueEntry = require('mpvue-entry')
+const HappyPack = require('happypack');
 const utils = require('./utils')
 const config = require('../../config/min')
 const vueLoaderConfig = require('./vue-loader.conf')
@@ -9,6 +11,8 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '../..', dir)
 }
+
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   // 通过 src/pages.js 来配置要打包的页面，
@@ -55,7 +59,7 @@ module.exports = {
         test: /\.js$/,
         include: resolve('src'),
         use: [
-          'babel-loader',
+          'happypack/loader?id=happyBabel',
           {
             loader: 'mpvue-loader',
             options: {
@@ -90,6 +94,14 @@ module.exports = {
   },
   plugins: [
     new MpvuePlugin(),
-    new MpvueEntry()
+    new MpvueEntry(),
+    new HappyPack({
+      id: 'happyBabel',
+      loaders: [{
+        loader: 'babel-loader?cacheDirectory=true',
+      }],
+      threadPool: happyThreadPool,
+      verbose: true
+    })
   ]
 }
