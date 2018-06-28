@@ -1,13 +1,21 @@
 <template>
   <div class="container">
-    首页
+    <x-picker :range="array">
+      <button type="primary">x-picker</button>
+    </x-picker>
   </div>
 </template>
 
 <script>
+import XPicker from 'elements/plt/x-picker'
+
 export default {
+  components: {
+    XPicker
+  },
   data () {
     return {
+      array: ['美国', '中国', '巴西', '日本']
     }
   },
   methods: {
@@ -16,39 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+.container {
+  padding: 20px;
 }
 </style>
