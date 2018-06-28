@@ -11,4 +11,5 @@ export default {
 </script>
 
 <style>
+@import "~weui/dist/style/weui.min.css";
 </style>
